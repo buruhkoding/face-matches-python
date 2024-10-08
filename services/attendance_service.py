@@ -1,7 +1,26 @@
-from models import Attendence
+from flask import jsonify
+import face_recognition
+import numpy as np
+from models import Attendence, Room, Employee
 from database.db import db
+from geopy.distance import geodesic
+
+def check_distance(data) :
+    employee = Employee.query.filter_by(employee_id = data['employee_id']).first();
+    room = Room.query.filter_by(room_id = employee.room_id).first()
+
+    predefined_location = (room.latitude, room.longitude)
+    current_location = (data['latitude'], data['longitude'])
+
+    distance = geodesic(predefined_location, current_location).meters
+
+    if distance > room.radius:
+        return jsonify({ "message": "Out of range" }), 400
+    
+    return jsonify({ "message": distance }), 200
 
 def attendance(data) :
+    
     new_attendance = Attendence(
         attendance_id = data['attendance_id'],
         employee_id = data['employee_id'],

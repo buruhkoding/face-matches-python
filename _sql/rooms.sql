@@ -1,0 +1,1 @@
+INSERT INTO "rooms" ("room_id", "room_name", "latitude", "longitude", "created_at", "updated_at", "radius") VALUES (1, 'Ruang HRD', '-7.808667808171254', '110.38238685200426', '2024-10-08 16:11:25.975507', '2024-10-08 16:11:25.975507', 50);

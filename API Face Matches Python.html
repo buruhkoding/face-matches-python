@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>API Face Matches Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <link rel="shortcut icon" href="https://chatboxai.app/icon.png">
+</head>
+<body class='bg-slate-100'>
+    <div class='mx-auto max-w-5xl shadow-md prose bg-white px-2 py-4'>
+        <h1 class='flex flex-row justify-between items-center my-4 h-8'>
+            <span>API Face Matches Python</span>
+            <a href="https://chatboxai.app" target="_blank" >
+                <img src='https://chatboxai.app/icon.png' class="w-12">
+            </a>
+        </h1>
+        <hr />
+        <div class="prose-sm">
+<h2>1. Api Pencoc</h2>
+<div class="mb-4">
+<p class="text-green-500 text-lg"><b>SYSTEM: </b></p>
+<div class="break-words "><p>You are a helpful assistant. You can help me by answering my questions. You can also ask me questions.</p></div></div>
+<div class="mb-4">
+<p class="text-green-500 text-lg"><b>USER: </b></p>
+<div class="break-words "><p>bisakah kamu membuatkanku sebuah api menggunakan python yang digunakan untuk melakukan pencocokan wajah yang akan diimplementasikan untuk aplikasi absen, jadi skemanya adalah melakukan request gambar dari postman kemudian dikirim ke backend (python) dan dicek menggunakan libary untuk face similarity kemudian jika hasilnya cocok akan mengirim sebuah response. tolong buatkan code nya secara lengkap dan langkah-langkah yang detail</p></div></div>
+<div class="mb-4">
+<p class="text-blue-500 text-lg"><b>ASSISTANT: </b></p>
+<div class="break-words "><p>Tentu! Di bawah ini, saya akan memberikan langkah-langkah lengkap untuk membuat API sederhana menggunakan Python yang dapat melakukan pencocokan wajah untuk aplikasi absensi. Kita akan menggunakan Flask sebagai framework web dan <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">face_recognition</code> sebagai library untuk melakukan pencocokan wajah.</p>
+<h3>Langkah 1: Instalasi Library yang Diperlukan</h3>
+<p>Sebelum kita mulai, pastikan Anda memiliki Python terinstal di sistem Anda. Kemudian, buat lingkungan virtual dan instal library yang diperlukan.</p>
+<ol>
+<li>
+<p><strong>Buat lingkungan virtual</strong>:</p>
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;BASH&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-bash" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span>python -m venv venv
+</span><span></span><span class="token class-name" style="color:#abe338">source</span><span> venv/bin/activate  </span><span class="token" style="color:#d4d0ab"># Untuk Linux/Mac</span><span>
+</span><span>venv</span><span class="token" style="color:#fefefe">\</span><span>Scripts</span><span class="token" style="color:#fefefe">\</span><span>activate  </span><span class="token" style="color:#d4d0ab"># Untuk Windows</span></code></div></div></pre>
+</li>
+<li>
+<p><strong>Instal Flask dan face_recognition</strong>:</p>
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;BASH&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-bash" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span>pip </span><span class="token" style="color:#ffd700">install</span><span> Flask face_recognition opencv-python</span></code></div></div></pre>
+</li>
+</ol>
+<h3>Langkah 2: Persiapkan Struktur Folder</h3>
+<p>Buat struktur folder berikut untuk proyek Anda:</p>
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;TEXT&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-text" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span>face_recognition_api/
+</span>│
+├── app.py
+├── known_faces/
+│   └── &lt;foto_wajah_anda&gt;.jpg
+└── uploads/</code></div></div></pre>
+<ul>
+<li><strong><code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">known_faces/</code></strong>: Folder ini akan menyimpan foto wajah yang sudah dikenal.</li>
+<li><strong><code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">uploads/</code></strong>: Folder ini akan menyimpan gambar yang diunggah untuk pencocokan.</li>
+</ul>
+<h3>Langkah 3: Membuat API dengan Flask</h3>
+<p>Berikut adalah contoh kode untuk file <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">app.py</code>:</p>
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;PYTHON&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-python" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span class="token" style="color:#00e0e0">from</span><span> flask </span><span class="token" style="color:#00e0e0">import</span><span> Flask</span><span class="token" style="color:#fefefe">,</span><span> request</span><span class="token" style="color:#fefefe">,</span><span> jsonify
+</span><span></span><span class="token" style="color:#00e0e0">import</span><span> face_recognition
+</span><span></span><span class="token" style="color:#00e0e0">import</span><span> numpy </span><span class="token" style="color:#00e0e0">as</span><span> np
+</span><span></span><span class="token" style="color:#00e0e0">import</span><span> os
+</span>
+<span>app </span><span class="token" style="color:#00e0e0">=</span><span> Flask</span><span class="token" style="color:#fefefe">(</span><span>__name__</span><span class="token" style="color:#fefefe">)</span><span>
+</span>
+<span></span><span class="token" style="color:#d4d0ab"># Load known faces from the known_faces directory</span><span>
+</span><span></span><span class="token" style="color:#00e0e0">def</span><span> </span><span class="token" style="color:#ffd700">load_known_faces</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>    known_face_encodings </span><span class="token" style="color:#00e0e0">=</span><span> </span><span class="token" style="color:#fefefe">[</span><span class="token" style="color:#fefefe">]</span><span>
+</span><span>    known_face_names </span><span class="token" style="color:#00e0e0">=</span><span> </span><span class="token" style="color:#fefefe">[</span><span class="token" style="color:#fefefe">]</span><span>
+</span>    
+<span>    </span><span class="token" style="color:#00e0e0">for</span><span> filename </span><span class="token" style="color:#00e0e0">in</span><span> os</span><span class="token" style="color:#fefefe">.</span><span>listdir</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#abe338">&#x27;known_faces&#x27;</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>        </span><span class="token" style="color:#00e0e0">if</span><span> filename</span><span class="token" style="color:#fefefe">.</span><span>endswith</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#abe338">&#x27;.jpg&#x27;</span><span class="token" style="color:#fefefe">)</span><span> </span><span class="token" style="color:#00e0e0">or</span><span> filename</span><span class="token" style="color:#fefefe">.</span><span>endswith</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#abe338">&#x27;.png&#x27;</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>            image_path </span><span class="token" style="color:#00e0e0">=</span><span> os</span><span class="token" style="color:#fefefe">.</span><span>path</span><span class="token" style="color:#fefefe">.</span><span>join</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#abe338">&#x27;known_faces&#x27;</span><span class="token" style="color:#fefefe">,</span><span> filename</span><span class="token" style="color:#fefefe">)</span><span>
+</span><span>            image </span><span class="token" style="color:#00e0e0">=</span><span> face_recognition</span><span class="token" style="color:#fefefe">.</span><span>load_image_file</span><span class="token" style="color:#fefefe">(</span><span>image_path</span><span class="token" style="color:#fefefe">)</span><span>
+</span><span>            encoding </span><span class="token" style="color:#00e0e0">=</span><span> face_recognition</span><span class="token" style="color:#fefefe">.</span><span>face_encodings</span><span class="token" style="color:#fefefe">(</span><span>image</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">[</span><span class="token" style="color:#00e0e0">0</span><span class="token" style="color:#fefefe">]</span><span>
+</span><span>            known_face_encodings</span><span class="token" style="color:#fefefe">.</span><span>append</span><span class="token" style="color:#fefefe">(</span><span>encoding</span><span class="token" style="color:#fefefe">)</span><span>
+</span><span>            known_face_names</span><span class="token" style="color:#fefefe">.</span><span>append</span><span class="token" style="color:#fefefe">(</span><span>filename</span><span class="token" style="color:#fefefe">.</span><span>split</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#abe338">&#x27;.&#x27;</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">[</span><span class="token" style="color:#00e0e0">0</span><span class="token" style="color:#fefefe">]</span><span class="token" style="color:#fefefe">)</span><span>  </span><span class="token" style="color:#d4d0ab"># Use filename without extension as name</span><span>
+</span>            
+<span>    </span><span class="token" style="color:#00e0e0">return</span><span> known_face_encodings</span><span class="token" style="color:#fefefe">,</span><span> known_face_names
+</span>
+<span>known_face_encodings</span><span class="token" style="color:#fefefe">,</span><span> known_face_names </span><span class="token" style="color:#00e0e0">=</span><span> load_known_faces</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#fefefe">)</span><span>
+</span>
+<span></span><span class="token decorator annotation" style="color:#fefefe">@app</span><span class="token decorator annotation" style="color:#fefefe">.</span><span class="token decorator annotation" style="color:#fefefe">route</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#abe338">&#x27;/match&#x27;</span><span class="token" style="color:#fefefe">,</span><span> methods</span><span class="token" style="color:#00e0e0">=</span><span class="token" style="color:#fefefe">[</span><span class="token" style="color:#abe338">&#x27;POST&#x27;</span><span class="token" style="color:#fefefe">]</span><span class="token" style="color:#fefefe">)</span><span>
+</span><span></span><span class="token" style="color:#00e0e0">def</span><span> </span><span class="token" style="color:#ffd700">match_face</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>    </span><span class="token" style="color:#d4d0ab"># Check if a file was uploaded</span><span>
+</span><span>    </span><span class="token" style="color:#00e0e0">if</span><span> </span><span class="token" style="color:#abe338">&#x27;file&#x27;</span><span> </span><span class="token" style="color:#00e0e0">not</span><span> </span><span class="token" style="color:#00e0e0">in</span><span> request</span><span class="token" style="color:#fefefe">.</span><span>files</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>        </span><span class="token" style="color:#00e0e0">return</span><span> jsonify</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#fefefe">{</span><span class="token" style="color:#abe338">&#x27;error&#x27;</span><span class="token" style="color:#fefefe">:</span><span> </span><span class="token" style="color:#abe338">&#x27;No file provided&#x27;</span><span class="token" style="color:#fefefe">}</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">,</span><span> </span><span class="token" style="color:#00e0e0">400</span><span>
+</span>    
+<span>    </span><span class="token" style="color:#abe338">file</span><span> </span><span class="token" style="color:#00e0e0">=</span><span> request</span><span class="token" style="color:#fefefe">.</span><span>files</span><span class="token" style="color:#fefefe">[</span><span class="token" style="color:#abe338">&#x27;file&#x27;</span><span class="token" style="color:#fefefe">]</span><span>
+</span>    
+<span>    </span><span class="token" style="color:#d4d0ab"># Save the uploaded file to the uploads folder</span><span>
+</span><span>    file_path </span><span class="token" style="color:#00e0e0">=</span><span> os</span><span class="token" style="color:#fefefe">.</span><span>path</span><span class="token" style="color:#fefefe">.</span><span>join</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#abe338">&#x27;uploads&#x27;</span><span class="token" style="color:#fefefe">,</span><span> </span><span class="token" style="color:#abe338">file</span><span class="token" style="color:#fefefe">.</span><span>filename</span><span class="token" style="color:#fefefe">)</span><span>
+</span><span>    </span><span class="token" style="color:#abe338">file</span><span class="token" style="color:#fefefe">.</span><span>save</span><span class="token" style="color:#fefefe">(</span><span>file_path</span><span class="token" style="color:#fefefe">)</span><span>
+</span>    
+<span>    </span><span class="token" style="color:#d4d0ab"># Load the uploaded image and get face encodings</span><span>
+</span><span>    uploaded_image </span><span class="token" style="color:#00e0e0">=</span><span> face_recognition</span><span class="token" style="color:#fefefe">.</span><span>load_image_file</span><span class="token" style="color:#fefefe">(</span><span>file_path</span><span class="token" style="color:#fefefe">)</span><span>
+</span><span>    uploaded_face_encodings </span><span class="token" style="color:#00e0e0">=</span><span> face_recognition</span><span class="token" style="color:#fefefe">.</span><span>face_encodings</span><span class="token" style="color:#fefefe">(</span><span>uploaded_image</span><span class="token" style="color:#fefefe">)</span><span>
+</span>    
+<span>    </span><span class="token" style="color:#00e0e0">if</span><span> </span><span class="token" style="color:#abe338">len</span><span class="token" style="color:#fefefe">(</span><span>uploaded_face_encodings</span><span class="token" style="color:#fefefe">)</span><span> </span><span class="token" style="color:#00e0e0">==</span><span> </span><span class="token" style="color:#00e0e0">0</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>        </span><span class="token" style="color:#00e0e0">return</span><span> jsonify</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#fefefe">{</span><span class="token" style="color:#abe338">&#x27;error&#x27;</span><span class="token" style="color:#fefefe">:</span><span> </span><span class="token" style="color:#abe338">&#x27;No face found in the uploaded image&#x27;</span><span class="token" style="color:#fefefe">}</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">,</span><span> </span><span class="token" style="color:#00e0e0">400</span><span>
+</span>    
+<span>    uploaded_face_encoding </span><span class="token" style="color:#00e0e0">=</span><span> uploaded_face_encodings</span><span class="token" style="color:#fefefe">[</span><span class="token" style="color:#00e0e0">0</span><span class="token" style="color:#fefefe">]</span><span>
+</span>    
+<span>    </span><span class="token" style="color:#d4d0ab"># Compare the uploaded face with known faces</span><span>
+</span><span>    results </span><span class="token" style="color:#00e0e0">=</span><span> face_recognition</span><span class="token" style="color:#fefefe">.</span><span>compare_faces</span><span class="token" style="color:#fefefe">(</span><span>known_face_encodings</span><span class="token" style="color:#fefefe">,</span><span> uploaded_face_encoding</span><span class="token" style="color:#fefefe">)</span><span>
+</span>    
+<span>    </span><span class="token" style="color:#d4d0ab"># Check if there is a match</span><span>
+</span><span>    </span><span class="token" style="color:#00e0e0">if</span><span> </span><span class="token" style="color:#00e0e0">True</span><span> </span><span class="token" style="color:#00e0e0">in</span><span> results</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>        matched_index </span><span class="token" style="color:#00e0e0">=</span><span> results</span><span class="token" style="color:#fefefe">.</span><span>index</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#00e0e0">True</span><span class="token" style="color:#fefefe">)</span><span>
+</span><span>        matched_name </span><span class="token" style="color:#00e0e0">=</span><span> known_face_names</span><span class="token" style="color:#fefefe">[</span><span>matched_index</span><span class="token" style="color:#fefefe">]</span><span>
+</span><span>        </span><span class="token" style="color:#00e0e0">return</span><span> jsonify</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#fefefe">{</span><span class="token" style="color:#abe338">&#x27;matched&#x27;</span><span class="token" style="color:#fefefe">:</span><span> </span><span class="token" style="color:#00e0e0">True</span><span class="token" style="color:#fefefe">,</span><span> </span><span class="token" style="color:#abe338">&#x27;name&#x27;</span><span class="token" style="color:#fefefe">:</span><span> matched_name</span><span class="token" style="color:#fefefe">}</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">,</span><span> </span><span class="token" style="color:#00e0e0">200</span><span>
+</span><span>    </span><span class="token" style="color:#00e0e0">else</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>        </span><span class="token" style="color:#00e0e0">return</span><span> jsonify</span><span class="token" style="color:#fefefe">(</span><span class="token" style="color:#fefefe">{</span><span class="token" style="color:#abe338">&#x27;matched&#x27;</span><span class="token" style="color:#fefefe">:</span><span> </span><span class="token" style="color:#00e0e0">False</span><span class="token" style="color:#fefefe">}</span><span class="token" style="color:#fefefe">)</span><span class="token" style="color:#fefefe">,</span><span> </span><span class="token" style="color:#00e0e0">200</span><span>
+</span>
+<span></span><span class="token" style="color:#00e0e0">if</span><span> __name__ </span><span class="token" style="color:#00e0e0">==</span><span> </span><span class="token" style="color:#abe338">&#x27;__main__&#x27;</span><span class="token" style="color:#fefefe">:</span><span>
+</span><span>    app</span><span class="token" style="color:#fefefe">.</span><span>run</span><span class="token" style="color:#fefefe">(</span><span>debug</span><span class="token" style="color:#00e0e0">=</span><span class="token" style="color:#00e0e0">True</span><span class="token" style="color:#fefefe">)</span></code></div></div></pre>
+<h3>Langkah 4: Menjalankan API</h3>
+<ol>
+<li>Pastikan Anda berada di dalam lingkungan virtual Anda dan di direktori proyek.</li>
+<li>Jalankan server Flask:
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;BASH&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-bash" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span>python app.py</span></code></div></div></pre>
+</li>
+</ol>
+<p>API akan berjalan di <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">http://127.0.0.1:5000</code>.</p>
+<h3>Langkah 5: Menguji API Menggunakan Postman</h3>
+<ol>
+<li>Buka Postman.</li>
+<li>Buat request baru dengan tipe <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">POST</code> ke <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">http://127.0.0.1:5000/match</code>.</li>
+<li>Di tab <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">Body</code>, pilih <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">form-data</code>.</li>
+<li>Tambahkan key <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">file</code>, dan pilih gambar yang ingin Anda uji (misalnya, gambar wajah yang ingin dicocokkan).</li>
+<li>Kirim request.</li>
+</ol>
+<h3>Contoh Respons</h3>
+<ul>
+<li>
+<p>Jika wajah cocok:</p>
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;JSON&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-json" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span class="token" style="color:#fefefe">{</span><span>
+</span><span>    </span><span class="token" style="color:#ffa07a">&quot;matched&quot;</span><span class="token" style="color:#00e0e0">:</span><span> </span><span class="token" style="color:#00e0e0">true</span><span class="token" style="color:#fefefe">,</span><span>
+</span><span>    </span><span class="token" style="color:#ffa07a">&quot;name&quot;</span><span class="token" style="color:#00e0e0">:</span><span> </span><span class="token" style="color:#abe338">&quot;nama_file_wajah&quot;</span><span>
+</span><span></span><span class="token" style="color:#fefefe">}</span></code></div></div></pre>
+</li>
+<li>
+<p>Jika wajah tidak cocok:</p>
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;JSON&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-json" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span class="token" style="color:#fefefe">{</span><span>
+</span><span>    </span><span class="token" style="color:#ffa07a">&quot;matched&quot;</span><span class="token" style="color:#00e0e0">:</span><span> </span><span class="token" style="color:#00e0e0">false</span><span>
+</span><span></span><span class="token" style="color:#fefefe">}</span></code></div></div></pre>
+</li>
+<li>
+<p>Jika tidak ada wajah yang ditemukan:</p>
+<pre><div><div style="display:flex;justify-content:space-between;width:100%;background-color:rgb(50, 50, 50);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, &quot;Liberation Mono&quot;, &quot;Courier New&quot;, monospace;border-top-left-radius:0.3rem;border-top-right-radius:0.3rem;border-bottom-left-radius:0;border-bottom-right-radius:0"><span style="text-decoration:none;color:gray;padding:2px;margin:2px 10px 0 10px">&lt;JSON&gt;</span></div><div style="color:#f8f8f2;background:#2b2b2b;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0;overflow:auto;border-radius:0.3em;margin-top:0;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:0.3rem;border-bottom-right-radius:0.3rem;border:none"><code class="language-json" style="color:#f8f8f2;background:none;font-family:Consolas, Monaco, &#x27;Andale Mono&#x27;, &#x27;Ubuntu Mono&#x27;, monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"><span class="token" style="color:#fefefe">{</span><span>
+</span><span>    </span><span class="token" style="color:#ffa07a">&quot;error&quot;</span><span class="token" style="color:#00e0e0">:</span><span> </span><span class="token" style="color:#abe338">&quot;No face found in the uploaded image&quot;</span><span>
+</span><span></span><span class="token" style="color:#fefefe">}</span></code></div></div></pre>
+</li>
+</ul>
+<h3>Catatan Tambahan</h3>
+<ol>
+<li>Pastikan Anda menambahkan beberapa gambar wajah yang sudah dikenal ke dalam folder <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">known_faces/</code>.</li>
+<li>Anda dapat menambahkan lebih banyak logika untuk menangani kesalahan atau menambah fitur sesuai kebutuhan aplikasi Anda.</li>
+</ol>
+<p>Dengan langkah-langkah di atas, Anda sudah memiliki API dasar untuk pencocokan wajah menggunakan Flask dan <code style="background-color:#f1f1f1;padding:2px 4px;marigin:0 4px;border-radius:4px;border:1px solid;border-color:#ddd">face_recognition</code>. Silakan sesuaikan sesuai kebutuhan aplikasi Anda! Jika ada pertanyaan lebih lanjut, silakan bertanya.</p></div></div>
+<hr />
+</div>
+
+        <hr />
+        <a href="https://chatboxai.app" style="display: flex; align-items: center;" class="text-sky-500" target="_blank">
+            <img src='https://chatboxai.app/icon.png' class="w-12 pr-2">
+            <b style='font-size:30px'>Chatbox AI</b>
+        </a>
+        <p><a a href="https://chatboxai.app" target="_blank">https://chatboxai.app</a></p>
+    </div>
+</body>
+</html>

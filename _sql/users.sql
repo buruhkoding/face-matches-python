@@ -1,0 +1,1 @@
+INSERT INTO "users" ("user_id", "username", "email", "password", "created_at", "updated_at") VALUES (1, 'madfizh', 'test@gmail.com', 'asu123', '2024-10-08 16:59:36.64021', '2024-10-08 16:59:36.64021');

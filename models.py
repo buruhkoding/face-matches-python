@@ -18,6 +18,7 @@ class Employee(db.Model):
 
     employee_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    room_id = db.Column(db.Integer, db.ForeignKey('rooms.rooms_id'), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -26,8 +27,19 @@ class Employee(db.Model):
     job_title = db.Column(db.String(50))
     department_id = db.Column(db.Integer)
     profile_photo = db.Column(db.String(50))
-    photo_attendance_1 = db.Column(db.String(50), nullable=False)
-    photo_attendance_2 = db.Column(db.String(50), nullable=False)
+    photo_verification_1 = db.Column(db.String(50), nullable=False)
+    photo_verification_2 = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(20), nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+class Room(db.Model):
+    __tablename__ = 'rooms'
+
+    room_id = db.Column(db.Integer, primary_key=True)
+    room_name = db.Column(db.String(50), nullable=False)
+    latitude = db.Column(db.String(50), nullable=False)
+    longitude = db.Column(db.String(50), nullable=False)
+    radius = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
